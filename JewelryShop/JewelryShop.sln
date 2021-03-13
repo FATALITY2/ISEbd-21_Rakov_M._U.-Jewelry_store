@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JewelryShopListImplements",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JewelryShopFileImplement", "JewelryShopFileImplement\JewelryShopFileImplement.csproj", "{9453AEDD-0EE5-4EDC-AF25-E5BA99614111}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JewelryShopDatabaseImplement", "JewelryShopDatabaseImplement\JewelryShopDatabaseImplement.csproj", "{EC606261-15AA-4785-9197-8CB06008803B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{9453AEDD-0EE5-4EDC-AF25-E5BA99614111}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9453AEDD-0EE5-4EDC-AF25-E5BA99614111}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9453AEDD-0EE5-4EDC-AF25-E5BA99614111}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC606261-15AA-4785-9197-8CB06008803B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC606261-15AA-4785-9197-8CB06008803B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC606261-15AA-4785-9197-8CB06008803B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC606261-15AA-4785-9197-8CB06008803B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
