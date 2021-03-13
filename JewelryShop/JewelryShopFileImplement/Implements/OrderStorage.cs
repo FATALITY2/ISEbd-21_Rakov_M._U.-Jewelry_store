@@ -87,8 +87,6 @@ namespace JewelryShopFileImplement.Implements
 
         private OrderViewModel CreateModel(Order order)
         {
-            Jewelry jewelry = source.Jewelrys.FirstOrDefault(rec => rec.Id == order.JewelryId);
-
             return new OrderViewModel
             {
                 Id = order.Id,
@@ -98,7 +96,7 @@ namespace JewelryShopFileImplement.Implements
                 DateCreate = order.DateCreate,
                 DateImplement = order.DateImplement,
                 Count = order.Count,
-                JewelryName = jewelry?.JewelryName
+                JewelryName = source.Jewelrys.FirstOrDefault(jewelry => jewelry.Id == order.JewelryId)?.JewelryName
             };
         }
     }
