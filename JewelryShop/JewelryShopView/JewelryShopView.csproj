@@ -148,9 +148,9 @@
       <Project>{9b4308a1-4614-4701-acb9-ce14384050fa}</Project>
       <Name>JewelryShopBusinessLogic</Name>
     </ProjectReference>
-    <ProjectReference Include="..\JewelryShopListImplements\JewelryShopListImplements.csproj">
-      <Project>{b9f8bad5-52d7-4e60-aa39-54a4072d6087}</Project>
-      <Name>JewelryShopListImplements</Name>
+    <ProjectReference Include="..\JewelryShopFileImplement\JewelryShopFileImplement.csproj">
+      <Project>{9453aedd-0ee5-4edc-af25-e5ba99614111}</Project>
+      <Name>JewelryShopFileImplement</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
