@@ -12,12 +12,14 @@ namespace JewelryShopListImplements
         public List<Order> Orders { get; set; }
 
         public List<Jewelry> Jewelrys { get; set; }
+        public List<Warehouse> Warehouses { get; set; }
 
         private DataListSingleton()
         {
             Components = new List<Component>();
             Orders = new List<Order>();
             Jewelrys = new List<Jewelry>();
+            Warehouses = new List<Warehouse>();
         }
 
         public static DataListSingleton GetInstance()
