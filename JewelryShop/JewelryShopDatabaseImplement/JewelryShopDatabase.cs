@@ -9,7 +9,7 @@ namespace JewelryShopDatabaseImplement
         {
             if (optionsBuilder.IsConfigured == false)
             {
-                optionsBuilder.UseSqlServer(@"Data Source=Maksim/MSSQLSERVER;Initial Catalog=JewelryShopDatabase;Integrated Security=True;MultipleActiveResultSets=True;");
+                optionsBuilder.UseSqlServer(@"Data Source=MAKSIM\MSSQLSERVER01;Initial Catalog=JewelryShopDatabase;Integrated Security=True;MultipleActiveResultSets=True;");
             }
             base.OnConfiguring(optionsBuilder);
         }
