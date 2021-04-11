@@ -36,6 +36,7 @@ namespace JewelryShopView
             this.dateTimePickerFrom = new System.Windows.Forms.DateTimePicker();
             this.labelTo = new System.Windows.Forms.Label();
             this.labelFrom = new System.Windows.Forms.Label();
+            this.reportViewer = new Microsoft.Reporting.WinForms.ReportViewer();
             this.panel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -47,16 +48,17 @@ namespace JewelryShopView
             this.panel.Controls.Add(this.dateTimePickerFrom);
             this.panel.Controls.Add(this.labelTo);
             this.panel.Controls.Add(this.labelFrom);
-            this.panel.Location = new System.Drawing.Point(3, 2);
+            this.panel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel.Location = new System.Drawing.Point(0, 0);
             this.panel.Name = "panel";
-            this.panel.Size = new System.Drawing.Size(798, 42);
+            this.panel.Size = new System.Drawing.Size(810, 42);
             this.panel.TabIndex = 1;
             // 
             // buttonToPdf
             // 
-            this.buttonToPdf.Location = new System.Drawing.Point(712, 8);
+            this.buttonToPdf.Location = new System.Drawing.Point(664, 8);
             this.buttonToPdf.Name = "buttonToPdf";
-            this.buttonToPdf.Size = new System.Drawing.Size(75, 23);
+            this.buttonToPdf.Size = new System.Drawing.Size(123, 23);
             this.buttonToPdf.TabIndex = 5;
             this.buttonToPdf.Text = "В pdf";
             this.buttonToPdf.UseVisualStyleBackColor = true;
@@ -64,9 +66,9 @@ namespace JewelryShopView
             // 
             // buttonMake
             // 
-            this.buttonMake.Location = new System.Drawing.Point(419, 12);
+            this.buttonMake.Location = new System.Drawing.Point(541, 7);
             this.buttonMake.Name = "buttonMake";
-            this.buttonMake.Size = new System.Drawing.Size(93, 23);
+            this.buttonMake.Size = new System.Drawing.Size(117, 23);
             this.buttonMake.TabIndex = 4;
             this.buttonMake.Text = "Сформировать";
             this.buttonMake.UseVisualStyleBackColor = true;
@@ -74,7 +76,7 @@ namespace JewelryShopView
             // 
             // dateTimePickerTo
             // 
-            this.dateTimePickerTo.Location = new System.Drawing.Point(221, 12);
+            this.dateTimePickerTo.Location = new System.Drawing.Point(212, 10);
             this.dateTimePickerTo.Name = "dateTimePickerTo";
             this.dateTimePickerTo.Size = new System.Drawing.Size(136, 20);
             this.dateTimePickerTo.TabIndex = 3;
@@ -98,11 +100,21 @@ namespace JewelryShopView
             // labelFrom
             // 
             this.labelFrom.AutoSize = true;
-            this.labelFrom.Location = new System.Drawing.Point(12, 12);
+            this.labelFrom.Location = new System.Drawing.Point(12, 13);
             this.labelFrom.Name = "labelFrom";
             this.labelFrom.Size = new System.Drawing.Size(14, 13);
             this.labelFrom.TabIndex = 0;
             this.labelFrom.Text = "С";
+            // 
+            // reportViewer
+            // 
+            this.reportViewer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.reportViewer.DocumentMapCollapsed = true;
+            this.reportViewer.Location = new System.Drawing.Point(-7, 42);
+            this.reportViewer.Name = "ReportViewer";
+            this.reportViewer.ServerReport.BearerToken = null;
+            this.reportViewer.Size = new System.Drawing.Size(795, 358);
+            this.reportViewer.TabIndex = 1;
             // 
             // FormReportOrders
             // 
@@ -128,5 +140,6 @@ namespace JewelryShopView
         private System.Windows.Forms.DateTimePicker dateTimePickerFrom;
         private System.Windows.Forms.Label labelTo;
         private System.Windows.Forms.Label labelFrom;
+        private Microsoft.Reporting.WinForms.ReportViewer reportViewer;
     }
 }
