@@ -9,6 +9,8 @@ namespace JewelryShopDatabaseImplement.Models
     {
         public int Id { get; set; }
 
+        public int ClientId { get; set; }
+
         public int JewelryId { get; set; }
 
         [Required]
@@ -26,5 +28,7 @@ namespace JewelryShopDatabaseImplement.Models
         public DateTime? DateImplement { get; set; }
 
         public virtual Jewelry Jewelry { get; set; }
+
+        public virtual Client Client { get; set; }
     }
 }

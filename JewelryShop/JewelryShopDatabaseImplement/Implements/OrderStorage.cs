@@ -16,7 +16,7 @@ namespace JewelryShopDatabaseImplement.Implements
         {
             using (var context = new JewelryShopDatabase())
             {
-                return context.Orders.Include(rec => rec.Jewelry).Select(rec => new OrderViewModel
+                return context.Orders.Include(rec => rec.Jewelry).Include(rec => rec.Client).Select(rec => new OrderViewModel
                 {
                     Id = rec.Id,
                     JewelryName = rec.Jewelry.JewelryName,
@@ -25,7 +25,9 @@ namespace JewelryShopDatabaseImplement.Implements
                     Sum = rec.Sum,
                     Status = rec.Status,
                     DateCreate = rec.DateCreate,
-                    DateImplement = rec.DateImplement
+                    DateImplement = rec.DateImplement,
+                    ClientId = rec.ClientId,
+                    ClientFIO = rec.Client.ClientFIO
                 })
                 .ToList();
             }
@@ -37,10 +39,11 @@ namespace JewelryShopDatabaseImplement.Implements
             {
                 return null;
             }
+
             using (var context = new JewelryShopDatabase())
             {
-                return context.Orders.Include(rec => rec.Jewelry)
-                .Where(rec => (!model.DateFrom.HasValue && !model.DateTo.HasValue && rec.DateCreate == model.DateCreate) ||
+                return context.Orders.Include(rec => rec.Jewelry).Include(rec => rec.Client)
+                .Where(rec => (model.ClientId.HasValue && rec.ClientId == model.ClientId) || (!model.DateFrom.HasValue && !model.DateTo.HasValue && rec.DateCreate == model.DateCreate) ||
                 (model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate.Date
                 >= model.DateFrom.Value.Date && rec.DateCreate.Date <= model.DateTo.Value.Date))
                 .Select(rec => new OrderViewModel
@@ -53,6 +56,8 @@ namespace JewelryShopDatabaseImplement.Implements
                     Status = rec.Status,
                     DateCreate = rec.DateCreate,
                     DateImplement = rec.DateImplement,
+                    ClientId = rec.ClientId,
+                    ClientFIO = rec.Client.ClientFIO
                 })
                 .ToList();
             }
@@ -66,7 +71,7 @@ namespace JewelryShopDatabaseImplement.Implements
             }
             using (var context = new JewelryShopDatabase())
             {
-                var order = context.Orders.Include(rec => rec.Jewelry)
+                var order = context.Orders.Include(rec => rec.Jewelry).Include(rec => rec.Client)
                 .FirstOrDefault(rec => rec.Id == model.Id);
                 return order != null ?
                 new OrderViewModel
@@ -78,7 +83,9 @@ namespace JewelryShopDatabaseImplement.Implements
                     Sum = order.Sum,
                     Status = order.Status,
                     DateCreate = order.DateCreate,
-                    DateImplement = order.DateImplement
+                    DateImplement = order.DateImplement,
+                    ClientId = order.ClientId,
+                    ClientFIO = order.Client.ClientFIO
                 } :
                 null;
             }
@@ -134,7 +141,9 @@ namespace JewelryShopDatabaseImplement.Implements
             order.Status = model.Status;
             order.DateCreate = model.DateCreate;
             order.DateImplement = model.DateImplement;
+            order.ClientId = (int)model.ClientId;
             return order;
         }
     }
 }
+

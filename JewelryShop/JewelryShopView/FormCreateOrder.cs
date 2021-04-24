@@ -1,8 +1,15 @@
-﻿using JewelryShopBusinessLogic.BindingModels;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using JewelryShopBusinessLogic.BindingModels;
 using JewelryShopBusinessLogic.BuisnessLogics;
 using JewelryShopBusinessLogic.ViewModels;
-using System;
-using System.Windows.Forms;
 using Unity;
 
 namespace JewelryShopView
@@ -11,43 +18,49 @@ namespace JewelryShopView
     {
         [Dependency]
         public new IUnityContainer Container { get; set; }
-
         private readonly JewelryLogic _logicP;
-
         private readonly OrderLogic _logicO;
+        private readonly ClientLogic _logicC;
 
-        public FormCreateOrder(JewelryLogic logicP, OrderLogic logicO)
+        public FormCreateOrder(JewelryLogic logicP, OrderLogic logicO, ClientLogic logicC)
         {
             InitializeComponent();
             _logicP = logicP;
             _logicO = logicO;
+            _logicC = logicC;
         }
 
         private void FormCreateOrder_Load(object sender, EventArgs e)
         {
             try
             {
-                var list = _logicP.Read(null);
-                foreach (var component in list)
+                var listJewelrys = _logicP.Read(null);
+                foreach (var p in listJewelrys)
                 {
                     comboBoxJewelry.DisplayMember = "JewelryName";
                     comboBoxJewelry.ValueMember = "Id";
-                    comboBoxJewelry.DataSource = list;
+                    comboBoxJewelry.DataSource = listJewelrys;
                     comboBoxJewelry.SelectedItem = null;
                 }
 
+                var listClients = _logicC.Read(null);
+                foreach (var client in listClients)
+                {
+                    comboBoxClient.DisplayMember = "ClientFIO";
+                    comboBoxClient.ValueMember = "Id";
+                    comboBoxClient.DataSource = listClients;
+                    comboBoxClient.SelectedItem = null;
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
-                MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void CalcSum()
         {
-            if (comboBoxJewelry.SelectedValue != null &&
-            !string.IsNullOrEmpty(textBoxCount.Text))
+            if (comboBoxJewelry.SelectedValue != null && !string.IsNullOrEmpty(textBoxCount.Text))
             {
                 try
                 {
@@ -58,8 +71,7 @@ namespace JewelryShopView
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
+                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -69,7 +81,7 @@ namespace JewelryShopView
             CalcSum();
         }
 
-        private void ComboBoxProduct_SelectedIndexChanged(object sender, EventArgs e)
+        private void ComboBoxJewelry_SelectedIndexChanged(object sender, EventArgs e)
         {
             CalcSum();
         }
@@ -78,13 +90,17 @@ namespace JewelryShopView
         {
             if (string.IsNullOrEmpty(textBoxCount.Text))
             {
-                MessageBox.Show("Заполните поле Количество", "Ошибка",
-                MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Заполните поле Количество", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             if (comboBoxJewelry.SelectedValue == null)
             {
-                MessageBox.Show("Выберите изделие", "Ошибка", MessageBoxButtons.OK,
+                MessageBox.Show("Выберите изделие", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (comboBoxClient.SelectedValue == null)
+            {
+                MessageBox.Show("Выберите клиента", "Ошибка", MessageBoxButtons.OK,
                 MessageBoxIcon.Error);
                 return;
             }
@@ -92,19 +108,18 @@ namespace JewelryShopView
             {
                 _logicO.CreateOrder(new CreateOrderBindingModel
                 {
+                    ClientId = Convert.ToInt32(comboBoxClient.SelectedValue),
                     JewelryId = Convert.ToInt32(comboBoxJewelry.SelectedValue),
                     Count = Convert.ToInt32(textBoxCount.Text),
                     Sum = Convert.ToDecimal(textBoxSum.Text)
                 });
-                MessageBox.Show("Сохранение прошло успешно", "Сообщение",
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Сохранение прошло успешно", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 DialogResult = DialogResult.OK;
                 Close();
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
-                MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
