@@ -30,7 +30,7 @@ namespace JewelryShopView
         private void InitializeComponent()
         {
             this.dataGridView = new System.Windows.Forms.DataGridView();
-            this.Package = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Jewelry = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Component = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Count = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.buttonSave = new System.Windows.Forms.Button();
@@ -42,7 +42,7 @@ namespace JewelryShopView
             this.dataGridView.BackgroundColor = System.Drawing.SystemColors.ControlLightLight;
             this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Package,
+            this.Jewelry,
             this.Component,
             this.Count});
             this.dataGridView.Location = new System.Drawing.Point(11, 57);
@@ -50,11 +50,11 @@ namespace JewelryShopView
             this.dataGridView.Size = new System.Drawing.Size(671, 270);
             this.dataGridView.TabIndex = 4;
             // 
-            // Package
+            // Jewelry
             // 
-            this.Package.HeaderText = "Изделие";
-            this.Package.Name = "Package";
-            this.Package.Width = 210;
+            this.Jewelry.HeaderText = "Изделие";
+            this.Jewelry.Name = "Jewelry";
+            this.Jewelry.Width = 210;
             // 
             // Component
             // 
@@ -96,7 +96,7 @@ namespace JewelryShopView
         #endregion
 
         private System.Windows.Forms.DataGridView dataGridView;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Package;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Jewelry;
         private System.Windows.Forms.DataGridViewTextBoxColumn Component;
         private System.Windows.Forms.DataGridViewTextBoxColumn Count;
         private System.Windows.Forms.Button buttonSave;

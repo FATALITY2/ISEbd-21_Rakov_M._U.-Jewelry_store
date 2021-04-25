@@ -1,23 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using JewelryShopBusinessLogic.BindingModels;
+using JewelryShopBusinessLogic.BuisnessLogics;
+using System;
 using System.Windows.Forms;
 using Unity;
-using JewelryShopBusinessLogic.BuisnessLogics;
-using JewelryShopBusinessLogic.BindingModels;
 
 namespace JewelryShopView
 {
     public partial class FormClients : Form
     {
-        [Dependency]
-        public new IUnityContainer Container { get; set; }
-
         private readonly ClientLogic logic;
 
         public FormClients(ClientLogic logic)
@@ -48,28 +38,6 @@ namespace JewelryShopView
             {
                 MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
                 MessageBoxIcon.Error);
-            }
-        }
-
-        private void ButtonAdd_Click(object sender, EventArgs e)
-        {
-            var form = Container.Resolve<FormClient>();
-            if (form.ShowDialog() == DialogResult.OK)
-            {
-                LoadData();
-            }
-        }
-
-        private void ButtonUpd_Click(object sender, EventArgs e)
-        {
-            if (dataGridView.SelectedRows.Count == 1)
-            {
-                var form = Container.Resolve<FormClient>();
-                form.Id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
-                if (form.ShowDialog() == DialogResult.OK)
-                {
-                    LoadData();
-                }
             }
         }
 
