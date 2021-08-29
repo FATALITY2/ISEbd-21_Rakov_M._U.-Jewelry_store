@@ -6,6 +6,7 @@ using JewelryShopBusinessLogic.ViewModels;
 using JewelryShopBusinessLogic.BindingModels;
 using System.Linq;
 using JewelryShopDatabaseImplement.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace JewelryShopDatabaseImplement.Implements
 {
@@ -15,10 +16,10 @@ namespace JewelryShopDatabaseImplement.Implements
         {
             using (var context = new JewelryShopDatabase())
             {
-                return context.Orders.Select(rec => new OrderViewModel
+                return context.Orders.Include(rec => rec.Jewelry).Select(rec => new OrderViewModel
                 {
                     Id = rec.Id,
-                    JewelryName = context.Jewelrys.FirstOrDefault(r => r.Id == rec.JewelryId).JewelryName,
+                    JewelryName = rec.Jewelry.JewelryName,
                     JewelryId = rec.JewelryId,
                     Count = rec.Count,
                     Sum = rec.Sum,
@@ -38,18 +39,20 @@ namespace JewelryShopDatabaseImplement.Implements
             }
             using (var context = new JewelryShopDatabase())
             {
-                return context.Orders
-                .Where(rec => rec.Id.Equals(model.Id))
+                return context.Orders.Include(rec => rec.Jewelry)
+                .Where(rec => (!model.DateFrom.HasValue && !model.DateTo.HasValue && rec.DateCreate == model.DateCreate) ||
+                (model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate.Date
+                >= model.DateFrom.Value.Date && rec.DateCreate.Date <= model.DateTo.Value.Date))
                 .Select(rec => new OrderViewModel
                 {
                     Id = rec.Id,
-                    JewelryName = context.Jewelrys.FirstOrDefault(r => r.Id == rec.JewelryId).JewelryName,
+                    JewelryName = rec.Jewelry.JewelryName,
                     JewelryId = rec.JewelryId,
                     Count = rec.Count,
                     Sum = rec.Sum,
                     Status = rec.Status,
                     DateCreate = rec.DateCreate,
-                    DateImplement = rec.DateImplement
+                    DateImplement = rec.DateImplement,
                 })
                 .ToList();
             }
@@ -63,13 +66,13 @@ namespace JewelryShopDatabaseImplement.Implements
             }
             using (var context = new JewelryShopDatabase())
             {
-                var order = context.Orders
+                var order = context.Orders.Include(rec => rec.Jewelry)
                 .FirstOrDefault(rec => rec.Id == model.Id);
                 return order != null ?
                 new OrderViewModel
                 {
                     Id = order.Id,
-                    JewelryName = context.Jewelrys.FirstOrDefault(r => r.Id == order.JewelryId).JewelryName,
+                    JewelryName = order.Jewelry.JewelryName,
                     JewelryId = order.JewelryId,
                     Count = order.Count,
                     Sum = order.Sum,

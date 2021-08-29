@@ -24,5 +24,7 @@ namespace JewelryShopDatabaseImplement.Models
         public DateTime DateCreate { get; set; }
 
         public DateTime? DateImplement { get; set; }
+
+        public virtual Jewelry Jewelry { get; set; }
     }
 }
