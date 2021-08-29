@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JewelryShopDatabaseImplement.Migrations
 {
     [DbContext(typeof(JewelryShopDatabase))]
-    [Migration("20210410102300_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20210513045458_InitiaCreate")]
+    partial class InitiaCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,30 @@ namespace JewelryShopDatabaseImplement.Migrations
                 .HasAnnotation("ProductVersion", "3.1.12")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("JewelryShopDatabaseImplement.Models.Client", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ClientFIO")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Clients");
+                });
 
             modelBuilder.Entity("JewelryShopDatabaseImplement.Models.Component", b =>
                 {
@@ -88,6 +112,9 @@ namespace JewelryShopDatabaseImplement.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("ClientId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Count")
                         .HasColumnType("int");
 
@@ -107,6 +134,8 @@ namespace JewelryShopDatabaseImplement.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ClientId");
 
                     b.HasIndex("JewelryId");
 
@@ -130,7 +159,13 @@ namespace JewelryShopDatabaseImplement.Migrations
 
             modelBuilder.Entity("JewelryShopDatabaseImplement.Models.Order", b =>
                 {
-                    b.HasOne("JewelryShopDatabaseImplement.Models.Jewelry", null)
+                    b.HasOne("JewelryShopDatabaseImplement.Models.Client", "Client")
+                        .WithMany("Order")
+                        .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("JewelryShopDatabaseImplement.Models.Jewelry", "Jewelry")
                         .WithMany("Order")
                         .HasForeignKey("JewelryId")
                         .OnDelete(DeleteBehavior.Cascade)

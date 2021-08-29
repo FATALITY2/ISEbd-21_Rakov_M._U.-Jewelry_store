@@ -1,7 +1,15 @@
-﻿using JewelryShopBusinessLogic.BindingModels;
-using JewelryShopBusinessLogic.BuisnessLogics;
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
+using JewelryShopBusinessLogic.BindingModels;
+using JewelryShopBusinessLogic.BuisnessLogics;
+using JewelryShopBusinessLogic.ViewModels;
 using Unity;
 
 namespace JewelryShopView
@@ -10,33 +18,34 @@ namespace JewelryShopView
     {
         [Dependency]
         public new IUnityContainer Container { get; set; }
-
         private readonly OrderLogic _orderLogic;
 
         private readonly ReportLogic _reportLogic;
-        public FormMain(OrderLogic orderLogic, ReportLogic reportLogic)
+
+        private readonly ClientLogic _clientLogic;
+        public FormMain(OrderLogic orderLogic, ReportLogic reportLogic, ClientLogic clientLogic)
         {
             InitializeComponent();
             this._orderLogic = orderLogic;
             this._reportLogic = reportLogic;
+            this._clientLogic = clientLogic;
         }
-
         private void FormMain_Load(object sender, EventArgs e)
         {
             LoadData();
         }
-
         private void LoadData()
         {
             try
             {
                 var list = _orderLogic.Read(null);
+
                 if (list != null)
                 {
                     dataGridView.DataSource = list;
                     dataGridView.Columns[0].Visible = false;
                     dataGridView.Columns[1].Visible = false;
-                    dataGridView.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                    dataGridView.Columns[2].Visible = false;
                 }
             }
             catch (Exception ex)
@@ -44,26 +53,22 @@ namespace JewelryShopView
                 MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
         private void КомпонентыToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var form = Container.Resolve<FormComponents>();
             form.ShowDialog();
         }
-
         private void ИзделияToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var form = Container.Resolve<FormJewelrys>();
             form.ShowDialog();
         }
-
         private void ButtonCreateOrder_Click(object sender, EventArgs e)
         {
             var form = Container.Resolve<FormCreateOrder>();
             form.ShowDialog();
             LoadData();
         }
-
         private void ButtonTakeOrderInWork_Click(object sender, EventArgs e)
         {
             if (dataGridView.SelectedRows.Count == 1)
@@ -71,16 +76,12 @@ namespace JewelryShopView
                 int id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
                 try
                 {
-                    _orderLogic.TakeOrderInWork(new ChangeStatusBindingModel
-                    {
-                        OrderId = id
-                    });
+                    _orderLogic.TakeOrderInWork(new ChangeStatusBindingModel { OrderId = id });
                     LoadData();
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
+                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -92,16 +93,12 @@ namespace JewelryShopView
                 int id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
                 try
                 {
-                    _orderLogic.FinishOrder(new ChangeStatusBindingModel
-                    {
-                        OrderId = id
-                    });
+                    _orderLogic.FinishOrder(new ChangeStatusBindingModel { OrderId = id });
                     LoadData();
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
+                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -118,8 +115,7 @@ namespace JewelryShopView
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
+                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -128,6 +124,7 @@ namespace JewelryShopView
         {
             LoadData();
         }
+
         private void списокИзделийToolStripMenuItem_Click(object sender, EventArgs e)
         {
             using (var dialog = new SaveFileDialog { Filter = "docx|*.docx" })
@@ -149,6 +146,12 @@ namespace JewelryShopView
         private void изделияПоКомпонентамToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var form = Container.Resolve<FormReportComponentJewelry>();
+            form.ShowDialog();
+        }
+
+        private void клиентыToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = Container.Resolve<FormClients>();
             form.ShowDialog();
         }
     }

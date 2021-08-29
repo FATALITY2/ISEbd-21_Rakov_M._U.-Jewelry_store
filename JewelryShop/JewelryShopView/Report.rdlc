@@ -291,7 +291,7 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="PackageName">
+                        <Textbox Name="JewelryName">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
@@ -305,7 +305,7 @@
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>PackageName</rd:DefaultName>
+                          <rd:DefaultName>JewelryName</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
